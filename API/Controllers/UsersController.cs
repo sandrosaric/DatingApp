@@ -4,13 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Entities;
 using API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    
+    public class UsersController : BaseApiController
     {
         private readonly IUserRepository _userRepository;
 
@@ -20,12 +20,14 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetAll(){
          
             return Ok(await  _userRepository.GetUsersAsync());
         }
 
         [HttpGet("{userId:int}")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<AppUser>>> Get(int userId){
             var user = await _userRepository.GetUserAsync(userId);
 

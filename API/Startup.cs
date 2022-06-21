@@ -15,6 +15,10 @@ using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using API.Services;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using API.Extensions;
 
 namespace API
 {
@@ -33,16 +37,15 @@ namespace API
         {
 
         
-
-            services.AddDbContext<DatingAppContext>(opt =>{
-               opt.UseSqlite(_config.GetConnectionString("DefaultConnection")); 
-            });
-            services.AddScoped<IUserRepository,UserRepository>();
+            
+           services.AddApplicationServices(_config);
             services.AddControllers();
              services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
     {
         builder.WithOrigins("https://localhost:4200").AllowAnyMethod().AllowAnyHeader();
     }));
+
+         services.AddIdentityServices(_config);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIv5", Version = "v1" });
@@ -66,6 +69,7 @@ namespace API
             app.UseRouting();
 
             app.UseCors("ApiCorsPolicy");
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
