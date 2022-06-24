@@ -52,7 +52,7 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto){
 
-            var user = await _userRepository.GetUserAsync(loginDto.Username);
+            var user = await _userRepository.GetUserByUsernameAsync(loginDto.Username);
 
             if(user == null) return Unauthorized("Invalid username");
 

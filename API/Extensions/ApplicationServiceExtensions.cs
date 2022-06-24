@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.DbContexts;
+using API.Profiles;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,7 @@ namespace API.Extensions
             });
             services.AddScoped<IUserRepository,UserRepository>();
             services.AddScoped<ITokenService,TokenService>();
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
             return services;
         }
