@@ -20,6 +20,9 @@ import { SharedModule } from './modules/shared.module';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrrorComponent } from './errors/server-errror/server-errror.component';
+import { MemberCardComponent } from './members/member-card/member-card.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+
 
 
 
@@ -36,7 +39,8 @@ import { ServerErrrorComponent } from './errors/server-errror/server-errror.comp
     ListsComponent,
     MessagesComponent,
     NotFoundComponent,
-    ServerErrrorComponent
+    ServerErrrorComponent,
+    MemberCardComponent
 
   ],
   imports: [
@@ -47,7 +51,8 @@ import { ServerErrrorComponent } from './errors/server-errror/server-errror.comp
 
   ],
   providers: [
-    {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true}
+    {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true},
+    {provide:HTTP_INTERCEPTORS,useClass:JwtInterceptor,multi:true}
   ],
   bootstrap: [AppComponent]
 })
