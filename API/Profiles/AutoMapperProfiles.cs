@@ -19,6 +19,11 @@ namespace API.Profiles
             CreateMap<MemberDto,AppUser>();
 
             CreateMap<Photo, PhotoDto>();
+            
+            CreateMap<MemberUpdateDto,AppUser>();
+
+            CreateMap<RegisterDto,AppUser>();
         }
+
     }
 }
